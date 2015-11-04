@@ -1,7 +1,7 @@
 <?php
-$host="62.149.150.122";
-$username="Sql376597";
-$password="1eb2205d";
+$host = "62.149.150.122";
+$username = "Sql376597";
+$password = "1eb2205d";
 
 #$host = "localhost";
 #$username = "root";
@@ -59,15 +59,23 @@ function checkLogin() {
     //return;
     session_start();
     ini_set("session.gc_maxlifetime", "1200");
-    ini_set("session.cookie_lifetime", "1200");    
+    ini_set("session.cookie_lifetime", "1200");
 
-    if(!session_is_registered(idutente)){
+    if (!session_is_registered(idutente)) {
 
-         //echo "Non hai le credenziali per visualizzare il contenuto di questa pagina.";
+        //echo "Non hai le credenziali per visualizzare il contenuto di questa pagina.";
         ?>
         <meta http-equiv="refresh" content="1; url=login.php "/>
         <?php
         exit();
     }
+}
+
+function accentRemove($string) {
+    $string = mb_strtolower(utf8_encode($string), 'UTF-8');
+    $b = array("á", "à", "é", "è", "í", "ì", "ó", "ò", "ú", "ù");
+    $c = array("a'", "a'","e'", "e'", "i'", "i'", "o'", "o'", "u'", "u'");
+    $string = str_replace($b, $c, $string);
+    return strtoupper($string);
 }
 ?>

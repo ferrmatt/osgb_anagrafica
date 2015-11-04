@@ -128,9 +128,9 @@ session_start();
                 $details['telefono'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['quota'], "</p></td><tr>";
 
-                $array_valori = array($details['stagione'], $details['cognome'], $details['nome'],
-                    $details['sezione'], $details['squadra'], $details['ruolo'], $details['luogo_di_nascita'],
-                    $details["data_di_nascita"], $details['mail'], $details['paese_di_residenza'], $details['via_piazza'],
+                $array_valori = array($details['stagione'], accentRemove($details['cognome']), accentRemove($details['nome']),
+                    $details['sezione'], $details['squadra'], $details['ruolo'], accentRemove($details['luogo_di_nascita']),
+                    $details["data_di_nascita"], $details['mail'], accentRemove($details['paese_di_residenza']), accentRemove($details['via_piazza']),
                     $details['codice_fiscale'], $details['tessera_sanitaria'], $details['cellulare'],
                     $details['telefono'], $details['quota']);
                 array_push($_SESSION['array_excel'], $array_valori);

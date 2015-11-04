@@ -76,9 +76,9 @@ codice_fiscale, tessera_sanitaria, telefono, cellulare, mail, redditi_nome, redd
             "<a href=\"scheda_socio.php?anagrafica=", $details['cf_id'], "\" color=�blue�>Scheda socio</a>", "</p></td>",        
             "<tr>";
 
-            $array_valori = array($details['cognome'],$details['nome'],
-                $details['luogo_di_nascita'],
-                $details["data_di_nascita"],$details['mail'],$details['paese_di_residenza'],$details['via_piazza'],
+            $array_valori = array(accentRemove($details['cognome']),accentRemove($details['nome']),
+                accentRemove($details['luogo_di_nascita']),
+                $details["data_di_nascita"],$details['mail'],accentRemove($details['paese_di_residenza']),accentRemove($details['via_piazza']),
                 $details['codice_fiscale'],$details['tessera_sanitaria'],$details['cellulare'],
                 $details['telefono']);
             array_push($_SESSION['array_excel'], $array_valori);            
