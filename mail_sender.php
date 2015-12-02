@@ -57,10 +57,18 @@ if($day == 01)
         $month = $month - 12;
         $year = $year_s + 1;
     }
+
+    $sql = 'select max(id) from osgb_anno_sociale';
+    $result = Query($sql);
+    WHILE ($details = mysql_fetch_array($result)):
+        $maxAnnoSociale = $details["max(id)"];
+    endwhile;
+    
+    $maxAnnoSociale = $maxAnnoSociale - 1;
     $sql = $sql_base . ' WHERE osgb_anagrafica.visitamedica <= \'' . $year . '-' . $month . '-31 00:00:00\'';
     $sql = $sql . ' AND osgb_anagrafica.visitamedica >= \'' . $year_s . '-' . $month_s . '-01 00:00:00\'';
     $sql = $sql . ' AND osgb_anagrafica.cf_id = osgb_relazione.anagrafica';
-    $sql = $sql . ' AND osgb_relazione.squadra = osgb_squadre.id AND annosociale>3';
+    $sql = $sql . ' AND osgb_relazione.squadra = osgb_squadre.id AND annosociale > '. $maxAnnoSociale;
     $sql = $sql . ' ORDER BY osgb_squadre.squadra, visitamedica, cognome';
 
     $result = Query($sql);
@@ -89,16 +97,15 @@ if($day == 01)
 
     $msg = $msg . "\n\n";
     $msg = $msg . "Ciao!\n\n";
-    $msg = $msg . "P.S.\nQuesta mail stata generata automaticamente: per qualsiasi problema, contatta Matteo Ferrari!";
+    $msg = $msg . "P.S.\nQuesta mail e' stata generata automaticamente: per qualsiasi problema, contatta Matteo Ferrari!";
 
     $messaggio->From = 'info@osgbmerate.it';
     $messaggio->AddAddress('info@osgbmerate.it');
-//    $messaggio->AddAddress('ferrmatt@gmail.com');
+    $messaggio->AddAddress('ferrmatt@gmail.com');
     $messaggio->AddReplyTo('info@osgbmerate.it');
     $messaggio->FromName = "OSGB Merate";
     $messaggio->Subject = 'Visite medica in scadenza';
     $messaggio->Body = stripslashes($msg);
-
     if (!$messaggio->Send()) {
         echo $messaggio->ErrorInfo;
     } else {
