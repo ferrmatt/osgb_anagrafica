@@ -151,7 +151,7 @@ $id_anagrafica=$_GET['cf_id'];
                         <select name = "quota" onchange = "run()" >
                             <?php
                             echo "<option>TUTTE</option>";
-                            $sql = 'SELECT id, quota FROM osgb_quota ORDER BY id ASC';
+                            $sql = 'SELECT id, quota FROM osgb_quota WHERE hide=0 ORDER BY quota*1 DESC';
                             $result = Query($sql);
                             while ($riga = mysql_fetch_array($result)) {
                                 $id = $riga['id'];

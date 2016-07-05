@@ -55,10 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $sql = 'select osgb_relazione.id as id, osgb_sezione.sezione,
                  osgb_quota.quota, osgb_anno_sociale.stagione,          
                  osgb_squadre.squadra, osgb_ruolo.ruolo, DATE(osgb_anagrafica.visitamedica) as pippo,
-                 osgb_relazione.tessera_figc, osgb_relazione.tessera_fipav, tessera_csi
+                 osgb_tesseramenti.tessera_figc, osgb_tesseramenti.tessera_fipav, 
+                 osgb_tesseramenti.tessera_csi
                 from 
-                 osgb_squadre, osgb_anagrafica, osgb_anno_sociale, 
-                 osgb_quota, osgb_relazione, osgb_sezione, osgb_ruolo 
+                 osgb_squadre,
+                 osgb_anagrafica LEFT OUTER JOIN osgb_tesseramenti ON osgb_anagrafica.cf_id=osgb_tesseramenti.anagrafica
+                 , 
+                 osgb_anno_sociale, 
+                 osgb_quota, 
+                 osgb_relazione,
+                 osgb_sezione, osgb_ruolo 
                 where 
                  osgb_relazione.anagrafica = osgb_anagrafica.cf_id AND
                  osgb_relazione.annosociale = osgb_anno_sociale.id AND
@@ -140,10 +146,13 @@ WHILE ($details = mysql_fetch_array($result3)) {
                         else
                             echo "<option value=\"$quota\">$quota</option>";
                     }
-                    echo "</select>", "</p></td><td nowrap=\"nowrap\"><p>";
-                    echo $details['tessera_figc'], "</p></td><td nowrap=\"nowrap\"><p>",
-                        $details['tessera_fipav'], "</p></td><td nowrap=\"nowrap\"><p>",
-                        $details['tessera_csi'], "</p></td><td nowrap=\"nowrap\"><p>";
+                    $tesseraFigc = $details['tessera_figc'];
+                    $tesseraFipav = $details['tessera_fipav'];
+                    $tesseraCsi = $details['tessera_csi'];
+                    echo "</select>", "</p></td><td nowrap=\"nowrap\"><p><input type=\"text\" name=\"tessera_figc\" size=\"20\" onblur=\"this.value = this.value.toUpperCase()\" value=\"$tesseraFigc\"";
+                    echo "</p></td><td nowrap=\"nowrap\"><p>",
+                        "<input type=\"text\" name=\"tessera_figc\" size=\"20\" onblur=\"this.value = this.value.toUpperCase()\" value=\"$tesseraFipav\"", "</p></td><td nowrap=\"nowrap\"><p>",
+                        "<input type=\"text\" name=\"tessera_figc\" size=\"20\" onblur=\"this.value = this.value.toUpperCase()\" value=\"$tesseraCsi\"", "</p></td><td nowrap=\"nowrap\"><p>";
                     //$details['quota'], "</p></td><td nowrap=\"nowrap\"><p>",
                     echo "<a onclick=\"return confirm('Stai per rimuovere il ruolo! Sei sicuro????\\nSe hai dubbi, annulla... e chiedi a Matteo Ferrari!')\" href=\"db/db_relazione_delete.php?id=", $details['id'], "&anagrafica=", $anagrafica, "\" color=�blue�>Rimuovi</a>", "</p></td>",
                     "<tr>";
