@@ -167,7 +167,7 @@ Connect($host, $username, $password, $dbname);
                         <select name = "quota" onchange = "run()" >
                             <?php
                             echo "<option>TUTTE</option>";
-                            $sql = 'SELECT id, quota FROM osgb_quota ORDER BY id ASC';
+                            $sql = 'SELECT id, quota FROM osgb_quota WHERE quota!=\'Altro\' ORDER BY id ASC';
                             $result = Query($sql);
                             while ($riga = mysql_fetch_array($result)) {
                                 $id = $riga['id'];

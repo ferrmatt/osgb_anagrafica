@@ -56,7 +56,7 @@ session_start();
             Connect($host, $username, $password, $dbname);
 
             $sql = 'select osgb_relazione.id as id, osgb_anagrafica.cf_id, osgb_sezione.sezione, 
-                 osgb_quota.quota, osgb_anno_sociale.stagione, osgb_ruolo.ruolo,         
+                 IF(osgb_quota.quota=\'Altro\',osgb_relazione.quota_libera,osgb_quota.quota) as quota, osgb_anno_sociale.stagione, osgb_ruolo.ruolo,         
                  osgb_anagrafica.cognome, osgb_anagrafica.nome, DATE(osgb_anagrafica.data_di_nascita) as data_di_nascita, osgb_anagrafica.luogo_di_nascita,
                  osgb_anagrafica.paese_di_residenza, osgb_anagrafica.via_piazza, osgb_anagrafica.codice_fiscale, 
                  osgb_anagrafica.tessera_sanitaria, osgb_anagrafica.telefono, osgb_anagrafica.cellulare, 

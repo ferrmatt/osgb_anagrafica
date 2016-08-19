@@ -167,13 +167,18 @@ $id_anagrafica=$_GET['cf_id'];
                             ?>
                         </select>
                     </td>
-                </tr>
+                    <?php
+                    if (isset($_POST['quota']) && $_POST['quota'] == 'Altro')
+                        {
+                    echo "<td>Altro: </td><td><input type=\"text\" name=\"quota_libera\" onchange=\"run()\" size=\"4\" onblur=\"this.value = this.value.toUpperCase()\"></td>";
+                     }  ?>
+                            </tr>
 
             </table>
         </form>
 
         <br></br>
-        <input type="button" value="Inserisci" onClick="window.location.href = './db/db_ruolo_insert.php?anagrafica=<?php echo $id_anagrafica ?>&sezione=<?php echo $id_sezione ?>&ruolo=<?php echo $id_ruolo ?>&annosociale=<?php echo $id_annosociale ?>&squadra=<?php echo $id_squadra ?>&quota=<?php echo $id_quota ?>'">
+        <input type="button" value="Inserisci" onClick="window.location.href = './db/db_ruolo_insert.php?anagrafica=<?php echo $id_anagrafica ?>&sezione=<?php echo $id_sezione ?>&ruolo=<?php echo $id_ruolo ?>&annosociale=<?php echo $id_annosociale ?>&squadra=<?php echo $id_squadra ?>&quota=<?php echo $id_quota ?>&quota_libera=<?php if (isset($_POST['quota_libera'])){echo $_POST['quota_libera'];}else{echo "";}?>'">
         <input type="button" value="Torna al menu Soci" onClick="window.location.href = 'soci_menu.php'">            
     </body>
 </html>        
