@@ -53,17 +53,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 $sql = 'select osgb_relazione.id as id, osgb_sezione.sezione,
-                 osgb_quota.quota, osgb_anno_sociale.stagione,          
+                 osgb_quota.quota, osgb_anno_sociale.stagione, osgb_anno_sociale.id as anno_sociale_id,         
                  osgb_squadre.squadra, osgb_ruolo.ruolo, DATE(osgb_anagrafica.visitamedica) as pippo,
                  osgb_tesseramenti.tessera_figc, osgb_tesseramenti.tessera_fipav, 
                  osgb_tesseramenti.tessera_csi
                 from 
                  osgb_squadre,
-                 osgb_anagrafica LEFT OUTER JOIN osgb_tesseramenti ON osgb_anagrafica.cf_id=osgb_tesseramenti.anagrafica
-                 , 
+                 osgb_relazione LEFT OUTER JOIN osgb_tesseramenti ON osgb_relazione.anagrafica=osgb_tesseramenti.anagrafica AND 
+                 osgb_relazione.annosociale=osgb_tesseramenti.anno_sociale, 
                  osgb_anno_sociale, 
                  osgb_quota, 
-                 osgb_relazione,
+                 osgb_anagrafica,
                  osgb_sezione, osgb_ruolo 
                 where 
                  osgb_relazione.anagrafica = osgb_anagrafica.cf_id AND
@@ -97,6 +97,7 @@ WHILE ($details = mysql_fetch_array($result3)) {
 <html>
     <head>
         <?php css(); ?>
+       
     </head>    
     <body>
         <form name="scheda_socio">
@@ -112,12 +113,32 @@ WHILE ($details = mysql_fetch_array($result3)) {
                     echo "<tr><td>Scadenza visita medica: </td><td></td><td>$visitaMedica</td></tr>";
                 ?>
             </table>
+             <script language="javascript"  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js">
+
+            $(document).ready(function ()
+            {
+                $("#update_tessere").click(function ()
+                {
+                    var textboxvalue = $('input[name=tessera_csi]').val();
+
+                    $.ajax(
+                            {
+                                type: "POST",
+                                url: 'db_relazione_update.php',
+                                data: {csi: textboxvalue},
+                                
+                            });
+                });
+            });
+            ​
+
+        </script>
             <br></br>
             <input type="button" value="Aggiungi ruolo" onClick="window.location.href = 'aggiungi_ruolo.php?cf_id=<?php echo $anagrafica ?>&nome=<?php echo addslashes($savedNome) ?>&cognome=<?php echo addslashes($savedCognome) ?>&data_di_nascita=<?php echo $birthDate ?>'">        
 
             <?php
             unset($_SESSION['array_excel']);
-            $array_titoli = array('ANNO SOCIALE', 'SEZIONE', 'RUOLO', 'SQUADRA', 'QUOTA', 'TESSERA_FIGC', 'TESSERA_FIPAV', 'TESSERA_CSI', '');
+            $array_titoli = array('ANNO SOCIALE', 'SEZIONE', 'RUOLO', 'SQUADRA', 'QUOTA', 'TESSERA_FIGC', 'TESSERA_FIPAV', 'TESSERA_CSI');
             $_SESSION['array_excel'] = array($array_titoli);
             echo "<table class=\"gradienttable\" >";
             echo "<tr>";
@@ -149,12 +170,13 @@ WHILE ($details = mysql_fetch_array($result3)) {
                     $tesseraFigc = $details['tessera_figc'];
                     $tesseraFipav = $details['tessera_fipav'];
                     $tesseraCsi = $details['tessera_csi'];
-                    echo "</select>", "</p></td><td nowrap=\"nowrap\"><p><input type=\"text\" name=\"tessera_figc\" size=\"20\" onblur=\"this.value = this.value.toUpperCase()\" value=\"$tesseraFigc\"";
-                    echo "</p></td><td nowrap=\"nowrap\"><p>",
-                        "<input type=\"text\" name=\"tessera_figc\" size=\"20\" onblur=\"this.value = this.value.toUpperCase()\" value=\"$tesseraFipav\"", "</p></td><td nowrap=\"nowrap\"><p>",
-                        "<input type=\"text\" name=\"tessera_figc\" size=\"20\" onblur=\"this.value = this.value.toUpperCase()\" value=\"$tesseraCsi\"", "</p></td><td nowrap=\"nowrap\"><p>";
-                    //$details['quota'], "</p></td><td nowrap=\"nowrap\"><p>",
-                    echo "<a onclick=\"return confirm('Stai per rimuovere il ruolo! Sei sicuro????\\nSe hai dubbi, annulla... e chiedi a Matteo Ferrari!')\" href=\"db/db_relazione_delete.php?id=", $details['id'], "&anagrafica=", $anagrafica, "\" color=�blue�>Rimuovi</a>", "</p></td>",
+                    echo "</select></p></td><td nowrap=\"nowrap\"><p>", 
+                    $details['tessera_figc'], "</p></td><td nowrap=\"nowrap\"><p>", 
+                            $details['tessera_fipav'], "</p></td><td nowrap=\"nowrap\"><p>", 
+                            $details['tessera_csi'], "</p></td><td nowrap=\"nowrap\"><p>";
+                            
+                    echo "<a href=\"dati_tesseramento.php?id=", $details['id'], "\" >  <img src=\"Images/edit.png\" title=\"Modifica dati tesseramenti\"</a>", "</p></td><td nowrap=\"nowrap\"><p>";
+                    echo "<a onclick=\"return confirm('Stai per rimuovere il ruolo! Sei sicuro????\\nSe hai dubbi, annulla... e chiedi a Matteo Ferrari!')\" href=\"db/db_relazione_delete.php?id=", $details['id'], "&anagrafica=", $anagrafica, "\" >  <img src=\"Images/delete.png\" title=\"Rimuovi ruolo\"</a>", "</p></td>",
                     "<tr>";
 
                     $array_valori = array(accentRemove($details['cognome']), accentRemove($details['nome']),
