@@ -97,7 +97,7 @@ WHILE ($details = mysql_fetch_array($result3)) {
 <html>
     <head>
         <?php css(); ?>
-       
+
     </head>    
     <body>
         <form name="scheda_socio">
@@ -113,26 +113,25 @@ WHILE ($details = mysql_fetch_array($result3)) {
                     echo "<tr><td>Scadenza visita medica: </td><td></td><td>$visitaMedica</td></tr>";
                 ?>
             </table>
-             <script language="javascript"  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js">
+            <script language="javascript"  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js">
 
-            $(document).ready(function ()
-            {
-                $("#update_tessere").click(function ()
+                $(document).ready(function ()
                 {
-                    var textboxvalue = $('input[name=tessera_csi]').val();
+                    $("#update_tessere").click(function ()
+                    {
+                        var textboxvalue = $('input[name=tessera_csi]').val();
 
-                    $.ajax(
-                            {
-                                type: "POST",
-                                url: 'db_relazione_update.php',
-                                data: {csi: textboxvalue},
-                                
-                            });
+                        $.ajax(
+                                {
+                                    type: "POST",
+                                    url: 'db_relazione_update.php',
+                                    data: {csi: textboxvalue},
+                                });
+                    });
                 });
-            });
-            ​
+                ​
 
-        </script>
+            </script>
             <br></br>
             <input type="button" value="Aggiungi ruolo" onClick="window.location.href = 'aggiungi_ruolo.php?cf_id=<?php echo $anagrafica ?>&nome=<?php echo addslashes($savedNome) ?>&cognome=<?php echo addslashes($savedCognome) ?>&data_di_nascita=<?php echo $birthDate ?>'">        
 
@@ -170,12 +169,34 @@ WHILE ($details = mysql_fetch_array($result3)) {
                     $tesseraFigc = $details['tessera_figc'];
                     $tesseraFipav = $details['tessera_fipav'];
                     $tesseraCsi = $details['tessera_csi'];
-                    echo "</select></p></td><td nowrap=\"nowrap\"><p>", 
-                    $details['tessera_figc'], "</p></td><td nowrap=\"nowrap\"><p>", 
-                            $details['tessera_fipav'], "</p></td><td nowrap=\"nowrap\"><p>", 
-                            $details['tessera_csi'], "</p></td><td nowrap=\"nowrap\"><p>";
-                            
-                    echo "<a href=\"dati_tesseramento.php?id=", $details['id'], "\" >  <img src=\"Images/edit.png\" title=\"Modifica dati tesseramenti\"</a>", "</p></td><td nowrap=\"nowrap\"><p>";
+                    echo "</select></p></td><td nowrap=\"nowrap\" style=\"text-align: center;\"><p>";
+
+                    if ($tesseraFigc == 1) {
+                        echo "<input onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=",$anagrafica,"&annoSociale=",$details['anno_sociale_id'], "&figc=0' \" type=\"checkbox\" checked name=\"tessera_figc\" value=\"tessera_figc\" onchange=\"run()\"/>";
+                    } else {
+                        echo "<input onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=",$anagrafica,"&annoSociale=",$details['anno_sociale_id'], "&figc=1' \" type=\"checkbox\" name=\"tessera_figc\" value=\"tessera_figc\" onchange=\"run()\"/>";
+                    }
+
+                    echo "</select></p></td><td nowrap=\"nowrap\" style=\"text-align: center;\"><p>";
+                    
+                    if ($tesseraFipav == 1) {
+                        echo "<input onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=",$anagrafica,"&annoSociale=",$details['anno_sociale_id'], "&fipav=0' \" type=\"checkbox\" checked name=\"tessera_fipav\" value=\"tessera_fipav\" onchange=\"run()\"/>";
+                    } else {
+                        echo "<input onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=",$anagrafica,"&annoSociale=",$details['anno_sociale_id'], "&fipav=1' \" type=\"checkbox\" name=\"tessera_fipav\" value=\"tessera_fipav\" onchange=\"run()\"/>";
+                    }
+
+                    echo "</select></p></td><td nowrap=\"nowrap\" style=\"text-align: center;\"><p>";
+                    
+                    if ($tesseraCsi == 1) {
+                        echo "<input onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=",$anagrafica,"&annoSociale=",$details['anno_sociale_id'], "&csi=0' \" type=\"checkbox\" checked name=\"tessera_csi\" value=\"tessera_csi\" onchange=\"run()\"/>";
+                    } else {
+                        echo "<input onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=",$anagrafica,"&annoSociale=",$details['anno_sociale_id'], "&csi=1' \" type=\"checkbox\" name=\"tessera_csi\" value=\"tessera_csi\" onchange=\"run()\"/>";
+                    }
+
+                    echo "</select></p></td><td nowrap=\"nowrap\" ><p>";
+
+                  
+                    //echo "<a href=\"dati_tesseramento.php?id=", $details['id'], "\" >  <img src=\"Images/edit.png\" title=\"Modifica dati tesseramenti\"</a>", "</p></td><td nowrap=\"nowrap\"><p>";
                     echo "<a onclick=\"return confirm('Stai per rimuovere il ruolo! Sei sicuro????\\nSe hai dubbi, annulla... e chiedi a Matteo Ferrari!')\" href=\"db/db_relazione_delete.php?id=", $details['id'], "&anagrafica=", $anagrafica, "\" >  <img src=\"Images/delete.png\" title=\"Rimuovi ruolo\"</a>", "</p></td>",
                     "<tr>";
 
