@@ -64,7 +64,7 @@ session_start();
             $visitaDate = $day."/".$month."/".$year;
 
             echo "<tr><td nowrap=\"nowrap\"><p>",
-            "<a href=\"modifica_visita.php?cf_id=", $details['cf_id'], "\" color=�blue�>Modifica</a>", "</p></td><td nowrap=\"nowrap\"><p>",
+            "<a href=\"modifica_visita.php?cf_id=", $details['cf_id'], "\" ><img src=\"Images/edit.png\" title=\"Modifica scadenza Visita Medica\"></a>", "</p></td><td nowrap=\"nowrap\"><p>",
             $details['cognome'], "</p></td><td nowrap=\"nowrap\"><p>",
             $details['nome'], "</p></td><td nowrap=\"nowrap\"><p>",
             $birthDate, "</p></td><td nowrap=\"nowrap\"><p>",

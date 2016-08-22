@@ -124,7 +124,7 @@ session_start();
                 $i = $i + 1;
                 $dataDiNascita = strtotime($details["data_di_nascita"]);
 
-                echo "<tr><td><input type=\"radio\" name=\"myradio\" class=\"radio\" value=" . $details['id'] . "></td>";
+                echo "<tr><td>&nbsp;&nbsp;<a href=\"scheda_socio.php?anagrafica=", $details['cf_id'], "\" ><img src=\"Images/socio.gif\" title=\"Scheda Socio\"</a>&nbsp;&nbsp;</td>";
                 echo "<td nowrap=\"nowrap\"><p>",
                 $details['stagione'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['cognome'], "</p></td><td nowrap=\"nowrap\"><p>",
@@ -172,7 +172,7 @@ session_start();
             ?>
             <td> Numero elementi: <?php echo $i ?></td>
             <br></br>
-            <input type="submit" name="scheda" value="Scheda Socio" disabled>
+            <!--input type="submit" name="scheda" value="Scheda Socio" disabled-->
         </form>
 
         <input type="button" value="Esporta in Excel" onClick="window.location.href = 'excel_creator.php?type=soci'">            

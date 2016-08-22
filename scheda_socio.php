@@ -197,7 +197,7 @@ WHILE ($details = mysql_fetch_array($result3)) {
 
                   
                     //echo "<a href=\"dati_tesseramento.php?id=", $details['id'], "\" >  <img src=\"Images/edit.png\" title=\"Modifica dati tesseramenti\"</a>", "</p></td><td nowrap=\"nowrap\"><p>";
-                    echo "<a onclick=\"return confirm('Stai per rimuovere il ruolo! Sei sicuro????\\nSe hai dubbi, annulla... e chiedi a Matteo Ferrari!')\" href=\"db/db_relazione_delete.php?id=", $details['id'], "&anagrafica=", $anagrafica, "\" >  <img src=\"Images/delete.png\" title=\"Rimuovi ruolo\"</a>", "</p></td>",
+                    echo "<a onclick=\"return confirm('Stai per rimuovere il ruolo! Sei sicuro????\\nSe hai dubbi, annulla... e chiedi a Matteo Ferrari!')\" href=\"db/db_relazione_delete.php?id=", $details['id'], "&anagrafica=", $anagrafica, "\" >  <img src=\"Images/delete.png\" title=\"Rimuovi ruolo\"></a>", "</p></td>",
                     "<tr>";
 
                     $array_valori = array(accentRemove($details['cognome']), accentRemove($details['nome']),

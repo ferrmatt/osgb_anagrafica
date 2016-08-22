@@ -42,7 +42,7 @@ codice_fiscale, tessera_sanitaria, telefono, cellulare, mail, redditi_nome, redd
         $result = Query($sql);
         
         unset($_SESSION['array_excel']);
-        $array_titoli = array('', 'COGNOME', 'NOME', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE', 'TESS. SANITARIA', 'CELLULARE', 'TELEFONO', '');
+        $array_titoli = array('', 'COGNOME', 'NOME', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE', 'TESS. SANITARIA', 'CELLULARE', 'TELEFONO');
         $_SESSION['array_excel'] = array($array_titoli);
         echo "<table class=\"gradienttable\" >";
         echo "<tr>";
@@ -61,7 +61,7 @@ codice_fiscale, tessera_sanitaria, telefono, cellulare, mail, redditi_nome, redd
             $birthDate = $day."/".$month."/".$year;
 
             echo "<tr><td nowrap=\"nowrap\"><p>",
-            "<a href=\"modifica_anagrafica.php?cf_id=", $details['cf_id'], "\" color=�blue�>Scheda Anagrafica</a>", "</p></td><td nowrap=\"nowrap\"><p>",
+            "<a href=\"modifica_anagrafica.php?cf_id=", $details['cf_id'], "\" ><img src=\"Images/anagrafica.png\" title=\"Scheda Anagrafica\"></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"scheda_socio.php?anagrafica=", $details['cf_id'], "\" ><img src=\"Images/socio.gif\" title=\"Scheda Socio\"</a>", "</p></td><td nowrap=\"nowrap\"><p>",
             $details['cognome'], "</p></td><td nowrap=\"nowrap\"><p>",
             $details['nome'], "</p></td><td nowrap=\"nowrap\"><p>",
             $details['luogo_di_nascita'], "</p></td><td nowrap=\"nowrap\"><p>",
@@ -72,8 +72,7 @@ codice_fiscale, tessera_sanitaria, telefono, cellulare, mail, redditi_nome, redd
             $details['codice_fiscale'], "</p></td><td nowrap=\"nowrap\"><p>",
             $details['tessera_sanitaria'], "</p></td><td nowrap=\"nowrap\"><p>",
             $details['cellulare'], "</p></td><td nowrap=\"nowrap\"><p>",
-            $details['telefono'], "</p></td><td nowrap=\"nowrap\"><p>",
-            "<a href=\"scheda_socio.php?anagrafica=", $details['cf_id'], "\" color=�blue�>Scheda socio</a>", "</p></td>",        
+            $details['telefono'], "</p></td>",        
             "<tr>";
 
             $array_valori = array(accentRemove($details['cognome']),accentRemove($details['nome']),
