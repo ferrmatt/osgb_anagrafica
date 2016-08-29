@@ -203,7 +203,7 @@ WHILE ($details = mysql_fetch_array($result3)) {
                     $array_valori = array(accentRemove($details['cognome']), accentRemove($details['nome']),
                         accentRemove($details['luogo_di_nascita']),
                         $details["data_di_nascita"], $details['mail'], accentRemove($details['paese_di_residenza']), accentRemove($details['via_piazza']),
-                        $details['codice_fiscale'], $details['tessera_sanitaria'], $details['cellulare'],
+                        $details['codice_fiscale']/*, $details['tessera_sanitaria']*/, $details['cellulare'],
                         $details['telefono']);
                     array_push($_SESSION['array_excel'], $array_valori);
                 endwhile;

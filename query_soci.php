@@ -109,7 +109,7 @@ session_start();
 
             if (isset($_SESSION['array_excel']))
                 unset($_SESSION['array_excel']);
-            $array_titoli = array('STAGIONE', 'COGNOME', 'NOME', 'SEZIONE', 'SQUADRA', 'RUOLO', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE', 'TESS. SANITARIA', 'CELLULARE', 'TELEFONO', 'QUOTA', 'SCADENZA VISITA MEDICA', 'TESSERA FIGC', 'TESSERA FIPAV', 'TESSERA CSI');
+            $array_titoli = array('STAGIONE', 'COGNOME', 'NOME', 'SEZIONE', 'SQUADRA', 'RUOLO', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE'/*, 'TESS. SANITARIA'*/, 'CELLULARE', 'TELEFONO', 'QUOTA', 'SCADENZA VISITA MEDICA', 'TESSERA FIGC', 'TESSERA FIPAV', 'TESSERA CSI');
 
             $_SESSION['array_excel'] = array($array_titoli);
             echo "<table class=\"gradienttable\" >";
@@ -149,7 +149,7 @@ session_start();
                 $details['paese_di_residenza'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['via_piazza'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['codice_fiscale'], "</p></td><td nowrap=\"nowrap\"><p>",
-                $details['tessera_sanitaria'], "</p></td><td nowrap=\"nowrap\"><p>",
+              //  $details['tessera_sanitaria'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['cellulare'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['telefono'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['quota'], "</p></td><td nowrap=\"nowrap\"><p>",
@@ -161,7 +161,7 @@ session_start();
                 $array_valori = array($details['stagione'], accentRemove($details['cognome']), accentRemove($details['nome']),
                     $details['sezione'], $details['squadra'], $details['ruolo'], accentRemove($details['luogo_di_nascita']),
                     $details["data_di_nascita"], $details['mail'], $details['paese_di_residenza'], $details['via_piazza'],
-                    $details['codice_fiscale'], $details['tessera_sanitaria'], $details['cellulare'],
+                    $details['codice_fiscale']/*, $details['tessera_sanitaria']*/, $details['cellulare'],
                     $details['telefono'], $details['quota'], $visitaMedica, $details['tessera_figc'],
                     $details['tessera_fipav'], $details['tessera_csi']);
                 array_push($_SESSION['array_excel'], $array_valori);

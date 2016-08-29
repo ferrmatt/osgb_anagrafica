@@ -39,7 +39,7 @@ session_start();
                     <td>Via/Piazza: </td><td><input type="text" name="via_piazza" size="30" onblur="this.value = this.value.toUpperCase()"></td></tr>
 
                 <tr><td>Cod. fiscale: </td><td><input type="text" name="codice_fiscale" size="16" onblur="this.value = this.value.toUpperCase()"></td>
-                    <td>Tess. Sanitaria: </td><td><input type="text" name="tessera_sanitaria" size="16" onblur="this.value = this.value.toUpperCase()"></td></tr>
+                    <!--td>Tess. Sanitaria: </td><td><input type="text" name="tessera_sanitaria" size="16" onblur="this.value = this.value.toUpperCase()"></td--></tr>
 
                 <tr><td>Telefono: </td><td><input type="text" name="telefono" size="16" onblur="this.value = this.value.toUpperCase()"></td>
                     <td>Cellulare: </td><td><input type="text" name="cellulare" size="16" onblur="this.value = this.value.toUpperCase()"></td></tr>

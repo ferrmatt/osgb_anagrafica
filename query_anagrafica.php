@@ -42,7 +42,7 @@ codice_fiscale, tessera_sanitaria, telefono, cellulare, mail, redditi_nome, redd
         $result = Query($sql);
         
         unset($_SESSION['array_excel']);
-        $array_titoli = array('', 'COGNOME', 'NOME', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE', 'TESS. SANITARIA', 'CELLULARE', 'TELEFONO');
+        $array_titoli = array('', 'COGNOME', 'NOME', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE'/*, 'TESS. SANITARIA'*/, 'CELLULARE', 'TELEFONO');
         $_SESSION['array_excel'] = array($array_titoli);
         echo "<table class=\"gradienttable\" >";
         echo "<tr>";
@@ -70,7 +70,7 @@ codice_fiscale, tessera_sanitaria, telefono, cellulare, mail, redditi_nome, redd
             $details['paese_di_residenza'], "</p></td><td nowrap=\"nowrap\"><p>",
             $details['via_piazza'], "</p></td><td nowrap=\"nowrap\"><p>",
             $details['codice_fiscale'], "</p></td><td nowrap=\"nowrap\"><p>",
-            $details['tessera_sanitaria'], "</p></td><td nowrap=\"nowrap\"><p>",
+            //$details['tessera_sanitaria'], "</p></td><td nowrap=\"nowrap\"><p>",
             $details['cellulare'], "</p></td><td nowrap=\"nowrap\"><p>",
             $details['telefono'], "</p></td>",        
             "<tr>";
@@ -78,7 +78,7 @@ codice_fiscale, tessera_sanitaria, telefono, cellulare, mail, redditi_nome, redd
             $array_valori = array(accentRemove($details['cognome']),accentRemove($details['nome']),
                 accentRemove($details['luogo_di_nascita']),
                 $details["data_di_nascita"],$details['mail'],accentRemove($details['paese_di_residenza']),accentRemove($details['via_piazza']),
-                $details['codice_fiscale'],$details['tessera_sanitaria'],$details['cellulare'],
+                $details['codice_fiscale']/*,$details['tessera_sanitaria']*/,$details['cellulare'],
                 $details['telefono']);
             array_push($_SESSION['array_excel'], $array_valori);            
         endwhile;

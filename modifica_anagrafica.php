@@ -105,7 +105,7 @@ $savedRedditiCodiceFiscale = $details["redditi_codice_fiscale"];
                     <td>Via/Piazza: </td><td><input type="text" name="via_piazza" size="30" onblur="this.value = this.value.toUpperCase()" value="<?php echo $savedViaPiazza; ?>" ></td></tr>
 
                 <tr><td>Cod. fiscale: </td><td><input type="text" name="codice_fiscale" size="16" onblur="this.value = this.value.toUpperCase()" value="<?php echo $savedCodiceFiscale; ?>" ></td>
-                    <td>Tess. Sanitaria: </td><td><input type="text" name="tessera_sanitaria" size="16" onblur="this.value = this.value.toUpperCase()" value="<?php echo $savedTesseraSanitaria; ?>" ></td></tr>
+                    <!--td>Tess. Sanitaria: </td><td><input type="text" name="tessera_sanitaria" size="16" onblur="this.value = this.value.toUpperCase()" value="?php echo $savedTesseraSanitaria; ?>" ></td--></tr>
 
                 <tr><td>Telefono: </td><td><input type="text" name="telefono" size="16" onblur="this.value = this.value.toUpperCase()" value="<?php echo $savedTelefono; ?>" ></td>
                     <td>Cellulare: </td><td><input type="text" name="cellulare" size="16" onblur="this.value = this.value.toUpperCase()" value="<?php echo $savedCellulare; ?>" ></td></tr>
