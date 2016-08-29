@@ -61,10 +61,14 @@ session_start();
                  osgb_anagrafica.paese_di_residenza, osgb_anagrafica.via_piazza, osgb_anagrafica.codice_fiscale, 
                  osgb_anagrafica.tessera_sanitaria, osgb_anagrafica.telefono, osgb_anagrafica.cellulare, 
                  osgb_anagrafica.mail, osgb_squadre.squadra, DATE(osgb_anagrafica.visitamedica) as visita_medica,
-                 osgb_relazione.tessera_figc, osgb_relazione.tessera_fipav, osgb_relazione.tessera_csi
+                 osgb_tesseramenti.tessera_figc, osgb_tesseramenti.tessera_fipav, 
+                 osgb_tesseramenti.tessera_csi
                 from 
                  osgb_squadre, osgb_anagrafica, osgb_anno_sociale, osgb_ruolo, 
-                 osgb_quota, osgb_relazione, osgb_sezione 
+                 osgb_quota, 
+                 osgb_sezione,
+                 osgb_relazione LEFT OUTER JOIN osgb_tesseramenti ON osgb_relazione.anagrafica=osgb_tesseramenti.anagrafica AND 
+                 osgb_relazione.annosociale=osgb_tesseramenti.anno_sociale
                 where 
                  osgb_relazione.anagrafica = osgb_anagrafica.cf_id AND
                  osgb_relazione.annosociale = osgb_anno_sociale.id AND
@@ -109,7 +113,7 @@ session_start();
 
             if (isset($_SESSION['array_excel']))
                 unset($_SESSION['array_excel']);
-            $array_titoli = array('STAGIONE', 'COGNOME', 'NOME', 'SEZIONE', 'SQUADRA', 'RUOLO', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE'/*, 'TESS. SANITARIA'*/, 'CELLULARE', 'TELEFONO', 'QUOTA', 'SCADENZA VISITA MEDICA', 'TESSERA FIGC', 'TESSERA FIPAV', 'TESSERA CSI');
+            $array_titoli = array('STAGIONE', 'COGNOME', 'NOME', 'SEZIONE', 'SQUADRA', 'RUOLO', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE'/* , 'TESS. SANITARIA' */, 'CELLULARE', 'TELEFONO', 'QUOTA', 'SCADENZA VISITA MEDICA', 'TESSERA FIGC', 'TESSERA FIPAV', 'TESSERA CSI');
 
             $_SESSION['array_excel'] = array($array_titoli);
             echo "<table class=\"gradienttable\" >";
@@ -123,6 +127,9 @@ session_start();
             WHILE ($details = mysql_fetch_array($result)):
                 $i = $i + 1;
                 $dataDiNascita = strtotime($details["data_di_nascita"]);
+                $tesseraFigc = $details['tessera_figc'];
+                $tesseraFipav = $details['tessera_fipav'];
+                $tesseraCsi = $details['tessera_csi'];
 
                 echo "<tr><td>&nbsp;&nbsp;<a href=\"scheda_socio.php?anagrafica=", $details['cf_id'], "\" ><img src=\"Images/socio.gif\" title=\"Scheda Socio\"</a>&nbsp;&nbsp;</td>";
                 echo "<td nowrap=\"nowrap\"><p>",
@@ -149,21 +156,56 @@ session_start();
                 $details['paese_di_residenza'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['via_piazza'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['codice_fiscale'], "</p></td><td nowrap=\"nowrap\"><p>",
-              //  $details['tessera_sanitaria'], "</p></td><td nowrap=\"nowrap\"><p>",
+                //  $details['tessera_sanitaria'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['cellulare'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['telefono'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['quota'], "</p></td><td nowrap=\"nowrap\"><p>",
-                $visitaMedica, "</p></td><td nowrap=\"nowrap\"><p>",
-                $details['tessera_figc'], "</p></td><td nowrap=\"nowrap\"><p>",
-                $details['tessera_fipav'], "</p></td><td nowrap=\"nowrap\"><p>",
-                $details['tessera_csi'], "</p></td><tr>";
+                $visitaMedica, "</p></td><td nowrap=\"nowrap\" style=\"text-align: center;\"><p>";
+                if ($tesseraFigc == 1) {
+                    echo "<input disabled=\"true\" onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=", $anagrafica, "&annoSociale=", $details['anno_sociale_id'], "&figc=0' \" type=\"checkbox\" checked name=\"tessera_figc\" value=\"tessera_figc\" onchange=\"run()\"/>";
+                } else {
+                    echo "<input disabled=\"true\" onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=", $anagrafica, "&annoSociale=", $details['anno_sociale_id'], "&figc=1' \" type=\"checkbox\" name=\"tessera_figc\" value=\"tessera_figc\" onchange=\"run()\"/>";
+                }
+
+                echo "</select></p></td><td nowrap=\"nowrap\" style=\"text-align: center;\"><p>";
+
+                if ($tesseraFipav == 1) {
+                    echo "<input disabled=\"true\" onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=", $anagrafica, "&annoSociale=", $details['anno_sociale_id'], "&fipav=0' \" type=\"checkbox\" checked name=\"tessera_fipav\" value=\"tessera_fipav\" onchange=\"run()\"/>";
+                } else {
+                    echo "<input disabled=\"true\" onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=", $anagrafica, "&annoSociale=", $details['anno_sociale_id'], "&fipav=1' \" type=\"checkbox\" name=\"tessera_fipav\" value=\"tessera_fipav\" onchange=\"run()\"/>";
+                }
+
+                echo "</select></p></td><td nowrap=\"nowrap\" style=\"text-align: center;\"><p>";
+
+                if ($tesseraCsi == 1) {
+                    echo "<input disabled=\"true\" onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=", $anagrafica, "&annoSociale=", $details['anno_sociale_id'], "&csi=0' \" type=\"checkbox\" checked name=\"tessera_csi\" value=\"tessera_csi\" onchange=\"run()\"/>";
+                } else {
+                    echo "<input disabled=\"true\" onChange=\"window.location.href = 'db/db_tesseramenti_update.php?anagraficaId=", $anagrafica, "&annoSociale=", $details['anno_sociale_id'], "&csi=1' \" type=\"checkbox\" name=\"tessera_csi\" value=\"tessera_csi\" onchange=\"run()\"/>";
+                }
+
+                echo "</p></td>";
+                
+                $valFigc = "";
+                $valFipav = "";
+                $valCsi = "";
+
+                if ($tesseraFigc == 1) {
+                    $valFigc = "X";
+                }
+                if ($tesseraFipav == 1) {
+                    $valFipav = "X";
+                }
+                if ($tesseraCsi == 1) {
+                    $valCsi = "X";
+                }
+
 
                 $array_valori = array($details['stagione'], accentRemove($details['cognome']), accentRemove($details['nome']),
                     $details['sezione'], $details['squadra'], $details['ruolo'], accentRemove($details['luogo_di_nascita']),
                     $details["data_di_nascita"], $details['mail'], $details['paese_di_residenza'], $details['via_piazza'],
-                    $details['codice_fiscale']/*, $details['tessera_sanitaria']*/, $details['cellulare'],
-                    $details['telefono'], $details['quota'], $visitaMedica, $details['tessera_figc'],
-                    $details['tessera_fipav'], $details['tessera_csi']);
+                    $details['codice_fiscale']/* , $details['tessera_sanitaria'] */, $details['cellulare'],
+                    $details['telefono'], $details['quota'], $visitaMedica, $valFigc,
+                    $valFipav, $valCsi);
                 array_push($_SESSION['array_excel'], $array_valori);
             endwhile;
 
