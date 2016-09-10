@@ -37,6 +37,8 @@ session_start();
             $squadra = pulisciCampi($_GET['squadra']);
             $ruolo = pulisciCampi($_GET['ruolo']);
             $quota = pulisciCampi($_GET['quota']);
+            $giorno_partita = pulisciCampi($_GET['giorno']);
+            $federazione = pulisciCampi($_GET['federazione']);
 
             if ($squadra == '')
                 $squadra = 'TUTTE';
@@ -113,7 +115,7 @@ session_start();
 
             if (isset($_SESSION['array_excel']))
                 unset($_SESSION['array_excel']);
-            $array_titoli = array('STAGIONE', 'COGNOME', 'NOME', 'SEZIONE', 'SQUADRA', 'RUOLO', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE'/* , 'TESS. SANITARIA' */, 'CELLULARE', 'TELEFONO', 'QUOTA', 'SCADENZA VISITA MEDICA', 'TESSERA FIGC', 'TESSERA FIPAV', 'TESSERA CSI');
+            $array_titoli = array('STATO ATLETA', 'STAGIONE', 'COGNOME', 'NOME', 'SEZIONE', 'SQUADRA', 'RUOLO', 'NATO A', 'DATA DI NASCITA', 'E-MAIL', 'RESIDENZA', 'INDIRIZZO', 'COD. FISCALE'/* , 'TESS. SANITARIA' */, 'CELLULARE', 'TELEFONO', 'QUOTA', 'SCADENZA VISITA MEDICA', 'TESSERA FIGC', 'TESSERA FIPAV', 'TESSERA CSI');
 
             $_SESSION['array_excel'] = array($array_titoli);
             echo "<table class=\"gradienttable\" >";
@@ -123,6 +125,33 @@ session_start();
                 echo "<th nowrap=\"nowrap\"><p>$value</p></th>";
             }
             echo "</tr>";
+            
+            if ($mese == 'Gennaio')
+                $mese = 1;
+            else if ($mese == 'Febbraio')
+                $mese = 2;
+            else if ($mese == 'Marzo')
+                $mese = 3;
+            else if ($mese == 'Aprile')
+                $mese = 4;
+            else if ($mese == 'Maggio')
+                $mese = 5;
+            else if ($mese == 'Giugno')
+                $mese = 6;
+            else if ($mese == 'Luglio')
+                $mese = 7;
+            else if ($mese == 'Agosto')
+                $mese = 8;
+            else if ($mese == 'Settembre')
+                $mese = 9;
+            else if ($mese == 'Ottobre')
+                $mese = 10;
+            else if ($mese == 'Novembre')
+                $mese = 11;
+            else if ($mese == 'Dicembre')
+                $mese = 12;    
+            
+            
             $i = 0;
             WHILE ($details = mysql_fetch_array($result)):
                 $i = $i + 1;
@@ -131,8 +160,65 @@ session_start();
                 $tesseraFipav = $details['tessera_fipav'];
                 $tesseraCsi = $details['tessera_csi'];
 
-                echo "<tr><td>&nbsp;&nbsp;<a href=\"scheda_socio.php?anagrafica=", $details['cf_id'], "\" ><img src=\"Images/socio.gif\" title=\"Scheda Socio\"</a>&nbsp;&nbsp;</td>";
-                echo "<td nowrap=\"nowrap\"><p>",
+                $visitaMedicaOk = true;
+                $federazioneOk = true;
+                $quotaOk = true;
+
+                if ($year == 1970 || $year == -0001) {
+                    $visitaMedica = "-";
+                    $visitaMedicaOk = false;
+                } else {
+                    $visitaMedica = $day . "-" . $month . "-" . $year;
+                    $giorno_gara = $giorno . "-" . $mese . "-" . $anno;
+                    $visitaMedicaNew = strtotime($visitaMedica);
+                    $giorno_gara_new = strtotime($giorno_gara);
+                  
+                    if ($giorno_gara_new > $visitaMedicaNew)
+                        $visitaMedicaOk = false;
+                }
+
+                if ($federazione != 'Tutte') {
+                    if ($federazione == 'FIGC' && !$tesseraFigc)
+                        $federazioneOk = false;
+                    if ($federazione == 'FIPAV' && !$tesseraFipav)
+                        $federazioneOk = false;
+                    if ($federazione == 'CSI' && !$tesseraCsi)
+                        $federazioneOk = false;
+                }
+                else {
+                    if (!$tesseraFigc && !$tesseraFipav && !$tesseraCsi)
+                        $federazioneOk = false;
+                }
+
+                if ($details['quota'] == 'Attesa Quota')
+                    $quotaOk = false;
+                
+                $puogiocare = "";
+
+                echo "<tr><td style=\"text-align:center\" >&nbsp;&nbsp;<a href=\"scheda_socio.php?anagrafica=", $details['cf_id'], "\"><img src=\"Images/socio.gif\" title=\"Scheda Socio\"</a></td>";
+                echo "<td style=\"text-align:center\" nowrap=\"nowrap\"><p>";
+                if ($details['ruolo'] == 'Atleta') {
+                    if (!$quotaOk)
+                        echo "<img src=\"Images/dollaro.png\" title=\"Quota non in regola\"</a>&nbsp;&nbsp;";
+                    if (!$federazioneOk)
+                        echo "<img src=\"Images/federazione.png\" title=\"Tesseramento non in regola\"</a>&nbsp;&nbsp;";
+                    if (!$visitaMedicaOk)
+                        echo "<img src=\"Images/visita.png\" title=\"Visita medica non in regola\"</a>&nbsp;&nbsp;";
+
+                    if ($quotaOk && $federazioneOk && $visitaMedicaOk)
+                    {
+                        echo "<img src=\"Images/ok.png\" title=\"Puo' giocare!!!\"</a>&nbsp;&nbsp;";
+                        $puogiocare = "OK";
+                    }
+                    else
+                    {
+                        $puogiocare = "NON puo' giocare!";
+                    }
+                }
+                else {
+                    
+                }
+                echo "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['stagione'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['cognome'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['nome'], "</p></td><td nowrap=\"nowrap\"><p>",
@@ -144,11 +230,7 @@ session_start();
                 $day = date('d', $savedVisitaMedica);
                 $month = date('m', $savedVisitaMedica);
                 $year = date('Y', $savedVisitaMedica);
-                if ($year == 1970) {
-                    $visitaMedica = "-";
-                } else {
-                    $visitaMedica = $day . "/" . $month . "/" . $year;
-                }
+
                 echo $details['ruolo'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['luogo_di_nascita'], "</p></td><td nowrap=\"nowrap\"><p>",
                 date('d', $dataDiNascita), "/", date('m', $dataDiNascita), "/", date('Y', $dataDiNascita), "</p></td><td nowrap=\"nowrap\"><p>",
@@ -184,7 +266,7 @@ session_start();
                 }
 
                 echo "</p></td>";
-                
+
                 $valFigc = "";
                 $valFipav = "";
                 $valCsi = "";
@@ -200,7 +282,7 @@ session_start();
                 }
 
 
-                $array_valori = array($details['stagione'], accentRemove($details['cognome']), accentRemove($details['nome']),
+                $array_valori = array($puogiocare, $details['stagione'], accentRemove($details['cognome']), accentRemove($details['nome']),
                     $details['sezione'], $details['squadra'], $details['ruolo'], accentRemove($details['luogo_di_nascita']),
                     $details["data_di_nascita"], $details['mail'], $details['paese_di_residenza'], $details['via_piazza'],
                     $details['codice_fiscale']/* , $details['tessera_sanitaria'] */, $details['cellulare'],

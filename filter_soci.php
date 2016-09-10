@@ -23,12 +23,14 @@ Connect($host, $username, $password, $dbname);
                         if (isset($_POST['nome']) && $_POST['nome'] != '') {
                             echo "value=" . $_POST['nome'];
                         }
-                        ?> onchange = "this.value = this.value.toUpperCase();run()" size="20" ></td > </tr>
+                        ?> onchange = "this.value = this.value.toUpperCase();
+                                run()" size="20" ></td > </tr>
                 <tr> <td> Cognome: </td><td><input type="text" name="cognome" <?php
                         if (isset($_POST['cognome']) && $_POST['cognome'] != '') {
                             echo "value=" . $_POST['cognome'];
                         }
-                        ?> onchange = "this.value = this.value.toUpperCase();run()" size="20"></td> </tr>
+                        ?> onchange = "this.value = this.value.toUpperCase();
+                                run()" size="20"></td> </tr>
 
                 <tr>
                     <td> Anno di Nascita: </td>
@@ -182,7 +184,108 @@ Connect($host, $username, $password, $dbname);
                     </td>
                 </tr>
             </table>
-            <input type = "button" value = "Cerca Soci" onClick = "window.location.href = 'query_soci.php?nome=<?php echo $_POST['nome']; ?>&cognome=<?php echo $_POST['cognome']; ?>&anno_sociale=<?php echo $_POST['anno_sociale']; ?>&sezione=<?php echo $_POST['sezione']; ?>&squadra=<?php echo $_POST['squadra']; ?>&ruolo=<?php echo $_POST['ruolo']; ?>&quota=<?php echo $_POST['quota']; ?>&anno_nascita=<?php echo $_POST['anno_nascita']; ?>'" >
+            <HR WIDTH="100%">
+            <table border = "0" cellspacing = "5" cellpadding = "5" >
+                <tr>
+                    <td > <b><em>     Puo' giocare?</em>     </b> </td>
+                </tr>
+
+                <tr>
+                    <td> Data partita: </td>
+                    <td>
+                        <?php
+                        $array = array('Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre');
+
+                        $now = time();
+                        $day = date('d', $now);
+                        $month = date('m', $now);
+                        $month_str = $array[$month];
+                        $year = date('Y', $now);
+
+                        echo "<select name=\"giorno\" onchange=\"run()\">";
+
+                        for ($i = 1; $i < 32; $i++)
+                            if (isset($_POST['giorno']) && $_POST['giorno'] == $i)
+                                echo "<option selected value=\"$i\">$i</option>";
+                            else if (!isset($_POST['giorno']) && $day == $i)
+                                echo "<option selected value=\"$day\">$day</option>";
+                            else
+                                echo "<option value=\"$i\">$i</option>";
+
+
+                        echo "</select>";
+
+                        echo "<select name=\"mese\" onchange=\"run()\">";
+
+                        foreach ($array as $i => $value) {
+                            if (isset($_POST['mese']) && $_POST['mese'] == $array[$i])
+                                echo "<option selected value=\"$array[$i]\">$array[$i]</option>";
+                            else if (!isset($_POST['mese']) && $month == ($i + 1))
+                                echo "<option selected value=\"$array[$i]\">$array[$i]</option>";
+                            else
+                                echo "<option value=\"$array[$i]\">$array[$i]</option>";
+                        }
+
+                        echo "</select>";
+
+                        echo "<select name=\"anno\" onchange=\"run()\">";
+                        for ($i = 2010; $i < 2021; $i++)
+                            if (isset($_POST['anno']) && $_POST['anno'] == $i)
+                                echo "<option selected value=\"$i\">$i</option>";
+                            else if (!isset($_POST['anno']) && $year == $i)
+                                echo "<option selected value=\"$year\">$year</option>";
+                            else
+                                echo "<option value=\"$i\">$i</option>";
+
+
+                        echo "</select>";
+                        ?>
+
+                </tr>
+
+                <tr>
+                    <td > Federazione: </td>
+                <td > 
+                    <select name="federazione" onchange="run()">
+
+                        <?php
+                        $federazione = 'Tutte';
+                        if (isset($_POST['federazione']) && $_POST['federazione'] == $federazione)
+                                    echo "<option selected value=\"$federazione\">$federazione</option>";
+                                else
+                                    echo "<option value=\"$federazione\">$federazione</option>";
+                        ?>
+                        <?php
+                        $federazione = 'FIGC';
+                        if (isset($_POST['federazione']) && $_POST['federazione'] == $federazione)
+                                    echo "<option selected value=\"$federazione\">$federazione</option>";
+                                else
+                                    echo "<option value=\"$federazione\">$federazione</option>";
+                        ?>
+                        <?php
+                        $federazione = 'FIPAV';
+                        if (isset($_POST['federazione']) && $_POST['federazione'] == $federazione)
+                                    echo "<option selected value=\"$federazione\">$federazione</option>";
+                                else
+                                    echo "<option value=\"$federazione\">$federazione</option>";
+                        ?>
+                        <?php
+                        $federazione = 'CSI';
+                        if (isset($_POST['federazione']) && $_POST['federazione'] == $federazione)
+                                    echo "<option selected value=\"$federazione\">$federazione</option>";
+                                else
+                                    echo "<option value=\"$federazione\">$federazione</option>";
+                        ?>
+                       
+                    </select>
+                </td>
+
+                </tr><tr>
+                </tr>
+
+
+            </table>
+            <input type="button" value="Cerca Soci" onClick = "window.location.href = 'query_soci.php?nome=<?php echo $_POST['nome']; ?>&cognome=<?php echo $_POST['cognome']; ?>&anno_sociale=<?php echo $_POST['anno_sociale']; ?>&sezione=<?php echo $_POST['sezione']; ?>&squadra=<?php echo $_POST['squadra']; ?>&ruolo=<?php echo $_POST['ruolo']; ?>&quota=<?php echo $_POST['quota']; ?>&anno_nascita=<?php echo $_POST['anno_nascita']; ?>&giorno=<?php echo $_POST['giorno']; ?>&mese=<?php echo $_POST['mese']; ?>&anno=<?php echo $_POST['anno']; ?>&federazione=<?php echo $_POST['federazione']; ?>'" >
             <input type="button" value="Torna al menu Soci" onClick="window.location.href = 'soci_menu.php'">     
         </form>       
     </body>
