@@ -159,6 +159,11 @@ session_start();
                 $tesseraFigc = $details['tessera_figc'];
                 $tesseraFipav = $details['tessera_fipav'];
                 $tesseraCsi = $details['tessera_csi'];
+                
+                $savedVisitaMedica = strtotime($details["visita_medica"]);
+                $day = date('d', $savedVisitaMedica);
+                $month = date('m', $savedVisitaMedica);
+                $year = date('Y', $savedVisitaMedica);
 
                 $visitaMedicaOk = true;
                 $federazioneOk = true;
@@ -225,12 +230,7 @@ session_start();
                 $details['sezione'], "</p></td><td nowrap=\"nowrap\"><p>";
                 if ($squadra != 'NESSUNA')
                     echo $details['squadra'], "</p></td><td nowrap=\"nowrap\"><p>";
-
-                $savedVisitaMedica = strtotime($details["visita_medica"]);
-                $day = date('d', $savedVisitaMedica);
-                $month = date('m', $savedVisitaMedica);
-                $year = date('Y', $savedVisitaMedica);
-
+                
                 echo $details['ruolo'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['luogo_di_nascita'], "</p></td><td nowrap=\"nowrap\"><p>",
                 date('d', $dataDiNascita), "/", date('m', $dataDiNascita), "/", date('Y', $dataDiNascita), "</p></td><td nowrap=\"nowrap\"><p>",

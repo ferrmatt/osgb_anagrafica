@@ -26,9 +26,9 @@ Connect($host, $username, $password, $dbname);
                                 $id_articolo = $riga['Id'];
                                 $articolo = $riga['Descrizione'];
                                 if (isset($_POST['articolo']) )
-                                    echo "<option selected value=\"$articolo\">$articolo</option>";
+                                    echo "<option selected value=\"$id_articolo\">$articolo</option>";
                                 else
-                                    echo "<option value=\"$articolo\">$articolo</option>";
+                                    echo "<option value=\"$id_articolo\">$articolo</option>";
                             }
                             ?>
                         </select>
@@ -45,16 +45,16 @@ Connect($host, $username, $password, $dbname);
                                 $id_taglia = $riga['id'];
                                 $taglia = $riga['taglia'];
                                 if (isset($_POST['taglia']) )
-                                    echo "<option selected value=\"$taglia\">$taglia</option>";
+                                    echo "<option selected value=\"$id_taglia\">$taglia</option>";
                                 else
-                                    echo "<option value=\"$taglia\">$taglia</option>";
+                                    echo "<option value=\"$id_taglia\">$taglia</option>";
                             }
                             ?>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td>Quantita': </td><td><input type="number" name="quantita" size="20" onblur="this.value = this.value.toUpperCase()"></td>
+                    <td>Quantita': </td><td><input type="number" name="quantita" size="5" onblur="this.value = this.value.toUpperCase()"></td>
                 </tr>
                 <tr>
                     <td>Data Carico: </td>
