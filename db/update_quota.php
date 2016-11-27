@@ -5,10 +5,17 @@ checkLogin();
 session_start();
 Connect($host, $username, $password, $dbname);
 
-$quota = $_GET["quota"] + 1;
-
-$sql = 'UPDATE osgb_relazione SET quota=' . $quota . " WHERE id=" . $_GET["id"];
-
+if (isset($_GET["quota_libera"])) {
+    $new_quota_libera = $_GET["quota_libera"];
+    if ($new_quota_libera=='')
+            $new_quota_libera='null';
+    $sql = 'UPDATE osgb_relazione SET quota_libera=' . $new_quota_libera . " WHERE id=" . $_GET["id"];
+    echo "aaaaa", $new_quota_libera;
+} else {
+    $quota = $_GET["quota"] + 1;
+    $sql = 'UPDATE osgb_relazione SET quota=' . $quota . " WHERE id=" . $_GET["id"];
+    echo "bbbbbbb", $quota;
+}
 echo $sql;
 $risultato = Query($sql);
 
