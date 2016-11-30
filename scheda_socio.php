@@ -137,7 +137,7 @@ WHILE ($details = mysql_fetch_array($result3)) {
 
             <?php
             unset($_SESSION['array_excel']);
-            $array_titoli = array('ANNO SOCIALE', 'SEZIONE', 'RUOLO', 'SQUADRA', 'QUOTA', 'QUOTA LIBERA', 'TESSERA_FIGC', 'TESSERA_FIPAV', 'TESSERA_CSI');
+            $array_titoli = array('ANNO SOCIALE', 'SEZIONE', 'RUOLO', 'SQUADRA', 'QUOTA', 'QUOTA VERSATA', 'TESSERA_FIGC', 'TESSERA_FIPAV', 'TESSERA_CSI');
             $_SESSION['array_excel'] = array($array_titoli);
             echo "<table class=\"gradienttable\" >";
             echo "<tr>";
