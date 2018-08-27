@@ -61,7 +61,7 @@ function checkLogin() {
     ini_set("session.gc_maxlifetime", "1200");
     ini_set("session.cookie_lifetime", "1200");
 
-    if (!session_is_registered(idutente)) {
+    if (isset($_SESSION['idutente'])) {
 
         //echo "Non hai le credenziali per visualizzare il contenuto di questa pagina.";
         ?>

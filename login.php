@@ -44,10 +44,10 @@ Connect($host, $username, $password, $dbname);
                             session_start();
                             $idutente = $row['id'];
                             $nomeutente = $row['username'];
-                            session_register("idutente");
-                            session_register("nomeutente"); 
-                            //$_SESSION['id_utente'] = $idutente;
-                            //$_SESSION['nome_utente'] = $nomeutente;
+                            //session_register("idutente");
+                            //session_register("nomeutente"); 
+                            $_SESSION['id_utente'] = $idutente;
+                            $_SESSION['nome_utente'] = $nomeutente;
                             header("location: Index.php");
                         }
                     }

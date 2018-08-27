@@ -120,7 +120,9 @@ Connect($host, $username, $password, $dbname);
                                         $sql = $sql . ' AND osgb_annosociale_squadre.sezione = osgb_sezione.id AND '
                                                 . 'osgb_sezione.sezione = \'' . $_POST['sezione'] . '\'';
                                     }
-                                    $sql = $sql . ' ORDER BY osgb_squadre.id DESC';
+                                    $sql = $sql . ' ORDER BY osgb_annosociale_squadre.id ASC';
+                                    
+//                                    echo "<td>$sql</td>";
 
                                     $result = Query($sql);
                                     if (mysql_num_rows($result) > 0) {
