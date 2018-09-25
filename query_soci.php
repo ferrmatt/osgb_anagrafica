@@ -125,7 +125,7 @@ session_start();
                 echo "<th nowrap=\"nowrap\"><p>$value</p></th>";
             }
             echo "</tr>";
-            
+
             if ($mese == 'Gennaio')
                 $mese = 1;
             else if ($mese == 'Febbraio')
@@ -149,9 +149,9 @@ session_start();
             else if ($mese == 'Novembre')
                 $mese = 11;
             else if ($mese == 'Dicembre')
-                $mese = 12;    
-            
-            
+                $mese = 12;
+
+
             $i = 0;
             WHILE ($details = mysql_fetch_array($result)):
                 $i = $i + 1;
@@ -175,14 +175,20 @@ session_start();
                 } else {
                     $visitaMedica = $day . "-" . $month . "-" . $year;
                     $giorno_gara = $giorno . "-" . $mese . "-" . $anno;
+
+                    
                     $visitaMedicaNew = strtotime($visitaMedica);
                     $giorno_gara_new = strtotime($giorno_gara);
-                  
+
+                    if ($mese == '') {
+                        $giorno_gara_new = time();
+                    }
+
                     if ($giorno_gara_new > $visitaMedicaNew)
                         $visitaMedicaOk = false;
                 }
 
-                if ($federazione != 'Tutte') {
+                if ($federazione != 'Tutte' && $federazione != '') {
                     if ($federazione == 'FIGC' && !$tesseraFigc)
                         $federazioneOk = false;
                     if ($federazione == 'FIPAV' && !$tesseraFipav)
@@ -197,7 +203,7 @@ session_start();
 
                 if ($details['quota'] == 'Attesa Quota')
                     $quotaOk = false;
-                
+
                 $puogiocare = "";
 
                 echo "<tr><td style=\"text-align:center\" >&nbsp;&nbsp;<a href=\"scheda_socio.php?anagrafica=", $details['cf_id'], "\"><img src=\"Images/socio.gif\" title=\"Scheda Socio\"</a></td>";
@@ -210,17 +216,13 @@ session_start();
                     if (!$visitaMedicaOk)
                         echo "<img src=\"Images/visita.png\" title=\"Visita medica non in regola\"</a>&nbsp;&nbsp;";
 
-                    if ($quotaOk && $federazioneOk && $visitaMedicaOk)
-                    {
+                    if ($quotaOk && $federazioneOk && $visitaMedicaOk) {
                         echo "<img src=\"Images/ok.png\" title=\"Puo' giocare!!!\"</a>&nbsp;&nbsp;";
                         $puogiocare = "OK";
-                    }
-                    else
-                    {
+                    } else {
                         $puogiocare = "NON puo' giocare!";
                     }
-                }
-                else {
+                } else {
                     
                 }
                 echo "</p></td><td nowrap=\"nowrap\"><p>",
@@ -230,7 +232,7 @@ session_start();
                 $details['sezione'], "</p></td><td nowrap=\"nowrap\"><p>";
                 if ($squadra != 'NESSUNA')
                     echo $details['squadra'], "</p></td><td nowrap=\"nowrap\"><p>";
-                
+
                 echo $details['ruolo'], "</p></td><td nowrap=\"nowrap\"><p>",
                 $details['luogo_di_nascita'], "</p></td><td nowrap=\"nowrap\"><p>",
                 date('d', $dataDiNascita), "/", date('m', $dataDiNascita), "/", date('Y', $dataDiNascita), "</p></td><td nowrap=\"nowrap\"><p>",

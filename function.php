@@ -57,12 +57,10 @@ function css() {
 
 function checkLogin() {
     //return;
+    
     session_start();
-    ini_set("session.gc_maxlifetime", "1200");
-    ini_set("session.cookie_lifetime", "1200");
 
-    if (isset($_SESSION['idutente'])) {
-
+    if (!isset($_SESSION['id_utente'])) {
         //echo "Non hai le credenziali per visualizzare il contenuto di questa pagina.";
         ?>
         <meta http-equiv="refresh" content="1; url=login.php "/>
