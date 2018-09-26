@@ -221,7 +221,8 @@ WHILE ($details = mysql_fetch_array($result3)) {
 
         <br></br>
         <input type="button" value="Vai all'anagrafica" onClick="window.location.href = 'modifica_anagrafica.php?cf_id=<?php echo $anagrafica ?>'">            
-        <input type="button" value="Torna al menu Soci" onClick="window.location.href = 'soci_menu.php'">            
+        <input type="button" value="Vai alla Visita Medica" onClick="window.location.href = 'modifica_visita.php?cf_id='+ <?php echo $anagrafica; ?>">      
+        <input type="button" value="Torna al menu Soci" onClick="window.location.href = 'soci_menu.php'">    
     </body>
 </html>            
 

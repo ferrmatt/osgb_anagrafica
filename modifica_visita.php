@@ -110,5 +110,7 @@ $birthDate = $day."/".$month."/".$year;
         <form action="./filter_visita.php">
             <input type="submit" value="Inserisci nuova scadenza">
         </form>
+        <input type="button" value="  Vai alla Scheda socio  " onClick="window.location.href = 'scheda_socio.php?anagrafica='+ <?php echo $savedId; ?>">      
+        <input type="button" value="  Vai all'Anagrafica  " onClick="window.location.href = 'modifica_anagrafica.php?cf_id='+ <?php echo $savedId; ?>">      
     </body>
 </html>

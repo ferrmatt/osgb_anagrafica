@@ -127,6 +127,7 @@ $savedRedditiCodiceFiscale = $details["redditi_codice_fiscale"];
         <form action="./Index.php">
             <input type="submit" value="Menu Principale">
         </form>
-        <input type="button" value="  Scheda socio  " onClick="window.location.href = 'scheda_socio.php?anagrafica='+ <?php echo $savedId; ?>">      
+        <input type="button" value="  Vai alla Scheda socio  " onClick="window.location.href = 'scheda_socio.php?anagrafica='+ <?php echo $savedId; ?>">      
+        <input type="button" value="  Vai alla Visita Medica  " onClick="window.location.href = 'modifica_visita.php?cf_id='+ <?php echo $savedId; ?>">      
     </body>
 </html>
