@@ -56,10 +56,10 @@ function sendMail($from, array $to, $replyTo, $object, $text, array $bcc) {
 
     echo $text;
     if (!$messaggio->Send()) {
-      echo $messaggio->ErrorInfo;
-      } else {
-      echo 'Email inviata correttamente!';
-      }
+        echo $messaggio->ErrorInfo;
+    } else {
+        echo 'Email inviata correttamente!';
+    }
 
     unset($messaggio);
 }
@@ -99,7 +99,7 @@ function sendMailReminder($dayNum) {
         $bcc = array();
 
         if ($mail == "") {
-            array_push($to, 'emicolomb@gmail.com ', 'info@osgbmerate.it');
+            array_push($to, 'info@osgbmerate.it', 'annavipera@alice.it', 'lella.matteoarianna@gmail.com', 'ferrmatt@gmail.com');
         } else if ($dayNum < 10) {
             array_push($bcc, 'emicolomb@gmail.com ', 'info@osgbmerate.it');
             preg_match_all($pattern, $mail, $to);
@@ -108,12 +108,12 @@ function sendMailReminder($dayNum) {
             preg_match_all($pattern, $mail, $to);
             $to = $to[0];
         }
-/* DEBUGDEBUG */
-        $to = array();
-        array_push($to, 'ferrmatt@gmail.com', 'annavipera@alice.it', 'lella.matteoarianna@gmail.com');
-         $bcc = array();
-/* DEBUGDEBUG */
-        
+        /* DEBUGDEBUG */
+//        $to = array();
+//        array_push($to, 'ferrmatt@gmail.com', 'annavipera@alice.it', 'lella.matteoarianna@gmail.com');
+//         $bcc = array();
+        /* DEBUGDEBUG */
+
 //        foreach ($to as $t) {
 //            echo "<br />To: " . $t;
 //        }
@@ -121,7 +121,7 @@ function sendMailReminder($dayNum) {
 //        foreach ($bcc as $b) {
 //            echo "<br />bcc: " . $b;
 //        }
-        
+
         echo "<br />msg: " . $msg;
 
         sendMail('info@osgbmerate.it', $to, 'info@osgbmerate.it', 'Visita medica in scadenza', $msg, $bcc);
@@ -213,12 +213,11 @@ if ($day == 01) {
     $to = array('info@osgbmerate.it', 'damohanna@alice.it');
     $bcc = array('ferrmatt@gmail.com');
     sendMail('info@osgbmerate.it', $to, 'info@osgbmerate.it', 'Visite medica in scadenza', $msg, $bcc);
-} else {
-
-    sendMailReminder(7);
-
-    sendMailReminder(30);
-
-    sendMailReminder(60);
 }
+
+//    sendMailReminder(7);
+
+sendMailReminder(30);
+
+//    sendMailReminder(60);
 ?> 
