@@ -87,7 +87,7 @@ $birthDate = $day."/".$month."/".$year;
                     echo "</select>";
 
                     echo "<select name=\"anno\" ";
-                    for ($i = 2012; $i < 2020; $i++)
+                    for ($i = 2018; $i < 2025; $i++)
                         if (date('Y', $savedVisitaMedica) == $i)
                             echo "<option selected value=\"$i\">$i</option>";
                         else

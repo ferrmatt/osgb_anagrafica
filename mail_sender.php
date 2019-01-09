@@ -210,7 +210,7 @@ if ($day == 01) {
     $msg = $msg . "Ciao!\n\n";
     $msg = $msg . "P.S.\nQuesta mail e' stata generata automaticamente: per qualsiasi problema, contatta Matteo Ferrari!";
 
-    $to = array('info@osgbmerate.it', 'damohanna@alice.it');
+    $to = array('info@osgbmerate.it', 'emicolomb@gmail.com');
     $bcc = array('ferrmatt@gmail.com');
     sendMail('info@osgbmerate.it', $to, 'info@osgbmerate.it', 'Visite medica in scadenza', $msg, $bcc);
 }
