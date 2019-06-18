@@ -64,7 +64,7 @@ Connect($host, $username, $password, $dbname);
                             echo "</select>";
 
                             echo "<select name=\"daanno\" onchange=\"run()\">";
-                            for ($i = 2010; $i < 2021; $i++)
+                            for ($i = 2018; $i < 2022; $i++)
                                 if (isset($_POST['daanno']) && $_POST['daanno'] == $i)
                                     echo "<option selected value=\"$i\">$i</option>";
                                 else if (!isset($_POST['daanno']) && $year == $i)
@@ -119,7 +119,7 @@ Connect($host, $username, $password, $dbname);
                             echo "</select>";
 
                             echo "<select name=\"aanno\" onchange=\"run()\">";
-                            for ($i = 2010; $i < 2021; $i++)
+                            for ($i = 2018; $i < 2022; $i++)
                                 if (isset($_POST['aanno']) && $_POST['aanno'] == $i)
                                     echo "<option selected value=\"$i\">$i</option>";
                                 else if (!isset($_POST['aanno']) && $year == $i)
